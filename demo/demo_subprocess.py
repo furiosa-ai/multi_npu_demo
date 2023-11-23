@@ -13,13 +13,13 @@ app = typer.Typer(pretty_exceptions_show_locals=False)
 
 
 @app.command()
-def demo_process(input_paths, output_path, device):
+def demo_process(input_path, output_path, device):
     inference_dataQ = mp.Queue()
     d_proc = mp.Process(target=run_inference, args=(inference_dataQ, device))
     d_proc.start()
 
     img_id = 0
-    cap = cv2.VideoCapture(input_paths)
+    cap = cv2.VideoCapture(input_path)
     while True:
         hasFrame, frame = cap.read()
         if not hasFrame:

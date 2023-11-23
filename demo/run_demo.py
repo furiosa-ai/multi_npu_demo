@@ -8,12 +8,7 @@ import subprocess
 import numpy as np
 import multiprocessing as mp
 
-# from fastapi import FastAPI, Response
-# from fastapi.responses import StreamingResponse, FileResponse
-
-
 STATE = 0
-
 
 def process_thread():
     t = threading.Thread(target=_process_thread)
@@ -33,16 +28,35 @@ def _process_thread():
 async def inference_subprocess():
     processes = []
 
-    device = ["npu0pe0"]
-    input_paths = ["/home/furiosa/hackaton_demo/demo/input_video/road_trafifc.mp4"]
-    output_paths = ["/home/furiosa/hackaton_demo/demo/output"]
+    input_video_path = "./input_video"
+    output_path = "./output"
+    input_video_names = os.listdir(input_video_path)
+
+    device = [
+        "npu" + str(npu_idx) + "pe" + str(idx)
+        for idx in range(2)
+        for npu_idx in range(2)
+    ]
+    input_paths = [
+        os.path.join(input_video_path, inpu_video_name)
+        for inpu_video_name in input_video_names
+    ]
+    output_paths = [
+        os.path.join(output_path, inpu_video_name.split(".")[0])
+        for inpu_video_name in input_video_names
+    ]
+
     for idx in range(len(device)):
+        if os.path.exists(output_paths[idx]):
+            subprocess.run(["rm", "-rf", output_paths[idx]])
+        os.mkdir(output_paths[idx])
+
         processes.append(
             await asyncio.create_subprocess_exec(
                 "python",
                 "demo_subprocess.py",
                 input_paths[idx],
-                output_paths[idx][0],
+                output_paths[idx],
                 device[idx],
             )
         )

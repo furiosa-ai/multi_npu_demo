@@ -30,7 +30,6 @@ async def run(detection_model, input_dataQ):
         *(task(detection_model, input_dataQ, worker_id) for worker_id in range(2))
     )
     t2 = time.perf_counter()
-    print(t2 - t1)
 
 
 async def task(detection_model, input_dataQ, worker_id):
