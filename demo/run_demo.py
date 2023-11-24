@@ -32,11 +32,6 @@ async def inference_subprocess():
     output_path = "./output"
     input_video_names = os.listdir(input_video_path)
 
-    device = [
-        "npu" + str(npu_idx) + "pe" + str(idx)
-        for idx in range(2)
-        for npu_idx in range(2)
-    ]
     input_paths = [
         os.path.join(input_video_path, inpu_video_name)
         for inpu_video_name in input_video_names
@@ -46,7 +41,8 @@ async def inference_subprocess():
         for inpu_video_name in input_video_names
     ]
 
-    for idx in range(len(device)):
+    # If we have 2 NPUs with 2 PEs each, we can spawn 4 subprocesses by utilizing a single PE at a time.
+    for idx in range(4):
         if os.path.exists(output_paths[idx]):
             subprocess.run(["rm", "-rf", output_paths[idx]])
         os.mkdir(output_paths[idx])
@@ -57,7 +53,7 @@ async def inference_subprocess():
                 "demo_subprocess.py",
                 input_paths[idx],
                 output_paths[idx],
-                device[idx],
+                "warboy(1)*1",  # Use one single-PE warboy (or, "warboy*1")
             )
         )
     await asyncio.gather(*(process.wait() for process in processes))
