@@ -2,8 +2,13 @@
 FuriosaAI Warboy와 SDK를 사용한 Object Detection 데모 코드가 담긴 레포지토리입니다.
 자세한 코드에 대한 설명은 [슬라이드]()를 통해 확인 가능합니다.
 
+## 0. 의존성 설치하기
+```shell
+pip install -r requirements.txt
+```
+
 ## 1. 모델 준비 하기
-Object Detection 모델로는 공개되어 있는 [YOLOv7](https://github.com/WongKinYiu/yolov7)을 사용하고 있습니다. 
+Object Detection 모델로는 공개되어 있는 [YOLOv7](https://github.com/WongKinYiu/yolov7)을 사용하고 있습니다.
 1. YOLOv7 Weight 파일 다운로드 및 ONNX Export
 ```
 $ cd model_export
