@@ -1,0 +1,4 @@
+furiosa-sdk[full]
+opencv-python-headless
+torchvision
+typer
