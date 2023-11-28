@@ -1,6 +1,6 @@
 # multi_npu_demo
 FuriosaAI Warboy와 SDK를 사용한 Object Detection 데모 코드가 담긴 레포지토리입니다.
-자세한 코드에 대한 설명은 [슬라이드]()를 통해 확인 가능합니다.
+자세한 코드에 대한 설명은 [슬라이드](https://drive.google.com/file/d/1QL9elTFzxYCdVPG23ptayvKgQxoZKdMz/view?usp=drive_link)를 통해 확인 가능합니다.
 
 ## 0. 의존성 설치하기
 ```shell
