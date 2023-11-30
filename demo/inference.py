@@ -41,7 +41,7 @@ async def task(detection_model, input_dataQ, worker_id):
             if img_idx < 0:
                 break
 
-            await process(detection_model, input_img, img_idx, output_path)
+        await process(detection_model, input_img, img_idx, output_path)
 
 
 async def process(detection_model, input_img, img_idx, output_path):
